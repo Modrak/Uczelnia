@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public abstract class człowiek {
+public abstract class Człowiek {
 
     String name;
     String lastName;
@@ -13,6 +13,11 @@ public abstract class człowiek {
         int choose=searching.nextInt();
         switch (choose){
             case 1:
+                System.out.println("Podaj Imie");
+                if(name.equals(searching.nextLine())){
+                    //znaduje takie imiona
+                }
+
                 // szukanie po imieniu
                 break;
             case 2:
