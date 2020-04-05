@@ -7,12 +7,13 @@ public class PracownikAdministracyjny  extends PracownikUczelni implements java.
     int solvedCases;
 
 
-    public PracownikAdministracyjny(String a, String b, int c, int d, int e) {
+    public PracownikAdministracyjny(String a, String b, int c, int d, int e, int f) {
         name=a;
         lastName=b;
         age=c;
         pesel=d;
-        solvedCases=e;
+        salary=e;
+        solvedCases=f;
     }
 
 }
