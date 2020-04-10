@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner menu =new Scanner(System.in);
         Uczelnia uczelnia=new Uczelnia();
@@ -16,6 +17,7 @@ public class Main {
         int choose=0;
         try {
             choose = menu.nextInt();
+            menu.nextLine();
         }
         catch(InputMismatchException e){
             System.out.println("Podaj cyfre!");
@@ -35,9 +37,14 @@ public class Main {
                 System.out.println("4. Po ilości rozwiązanych spraw");
 
                 int chooseCase3= menu.nextInt();
+                menu.nextLine();
                 switch (chooseCase3){
                     case 1:
-                        uczelnia.lookingForAdminByName();
+                        System.out.println("Podaj imie: ");
+                        String tempName =menu.nextLine();
+                        System.out.println("SZUKANIE");
+                        System.out.println(uczelnia.lookingForAdminByName(tempName).name);
+
                         break;
                     case 2:
                         uczelnia.lookingForAdminByLastName();

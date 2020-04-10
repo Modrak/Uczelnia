@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.List;
 
 public class PracownikAdministracyjny  extends PracownikUczelni implements java.io.Serializable {
 
@@ -14,6 +11,10 @@ public class PracownikAdministracyjny  extends PracownikUczelni implements java.
         pesel=d;
         salary=e;
         solvedCases=f;
+        System.out.println(name+lastName+age);
+    }
+    public void presentAdmin(){
+        System.out.println("Imie:"+name+" Nazwisko: "+lastName+" Wiek: "+age+" Wypłata: "+salary);
     }
 
 }
