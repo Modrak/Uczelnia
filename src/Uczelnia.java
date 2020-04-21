@@ -11,7 +11,7 @@ public class Uczelnia {
 
     public Uczelnia() {
         try {
-            String adminFileName="Administration.ser";
+            String adminFileName="Administration.txt";
             File adminFile=new File(adminFileName);
             adminFile.createNewFile();
             FileInputStream fileAdmin = new FileInputStream(adminFileName);
@@ -32,11 +32,11 @@ public class Uczelnia {
         }
 
         try{
-            String teacherFileName="Teachers.ser";
+            String teacherFileName="Teachers.txt";
             File teachersFile=new File(teacherFileName);
             teachersFile.createNewFile();
 
-            FileInputStream fileTeachers = new FileInputStream("Teachers.ser");
+            FileInputStream fileTeachers = new FileInputStream("Teachers.txt");
             ObjectInputStream inTeachers = new ObjectInputStream(fileTeachers);
             teachers = (ArrayList<PracownikDydaktyczny>) inTeachers.readObject();
         }
@@ -58,20 +58,20 @@ public class Uczelnia {
 
             System.out.println(administration.size());
             System.out.println("Podaj imie:");
-            String a = geting.nextLine();
+            String name = geting.nextLine();
             System.out.println("Podaj nazwisko:");
-            String b = geting.nextLine();
+            String lastName = geting.nextLine();
             System.out.println("Podaj wiek:");
             try {
-                int c = geting.nextInt();
+                int age = geting.nextInt();
                 System.out.println("Podaj PESEL:");
-                int d = geting.nextInt();
+                int pesel = geting.nextInt();
                 System.out.println("Podaj wypłate:");
-                int e = geting.nextInt();
+                int salary = geting.nextInt();
                 System.out.println("Podaj ilość rozwiązanych spraw:");
-                int f = geting.nextInt();
+                int solvedCases = geting.nextInt();
 
-                administration.add(new PracownikAdministracyjny(a, b, c, d, e, f));
+                administration.add(new PracownikAdministracyjny(name, lastName, age, pesel, salary, solvedCases));
 
             } catch (InputMismatchException e) {
                 System.out.println("Należy podawać liczby.");
@@ -83,7 +83,7 @@ public class Uczelnia {
                 System.out.println(administration.get(administration.size()-1).lastName);
                 System.out.println(administration.get(administration.size()-1).age);
                 System.out.println(administration.size());
-                FileOutputStream file = new FileOutputStream("Administration.ser");
+                FileOutputStream file = new FileOutputStream("Administration.txt");
                 ObjectOutputStream out = new ObjectOutputStream(file);
                 out.writeObject(administration);
                 out.close();
@@ -96,156 +96,103 @@ public class Uczelnia {
                 System.out.println(ex.getCause());
                 System.out.println(ex.getMessage());
             }
-            //Deserializacja
-            try {
-
-                FileInputStream file = new FileInputStream("Administration.ser");
-                ObjectInputStream in = new ObjectInputStream(file);
-
-
-                administration = (ArrayList) in.readObject();
-                in.close();
-                file.close();
-
-                System.out.println("Object has been deserialized >> ROZMIAR:");
-                System.out.println(administration.size());
-                System.out.println("wszyscy");
-                for(int i=0; i<administration.size(); i++){
-                    System.out.println("Czlowiek nr "+ (i+1));
-                    System.out.println(administration.get(i).name);
-                    System.out.println(administration.get(i).lastName);
-                    System.out.println(administration.get(i).age);
-                    System.out.println(administration.get(i).salary);
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        public PracownikAdministracyjny lookingForAdminByName(String tempName){
-
-            System.out.println(administration.size());
-            System.out.println(administration.get(0).name);
-            System.out.println(administration.get(1).lastName);
-                    for(int i = 0; i<administration.size() ;i++){
-                        System.out.println(administration.get(i).name); //testowo podaje wszystkie imiona
-                        if(administration.get(i).name.equals(tempName)) {
-                            return administration.get(i);
-                        }
-                    }
-            return null;
-
-         }
 
 
 
-
-
-
-
-
-    public void lookingForAdminByLastName(){
-
-
-        System.out.println("Podaj imie które chcesz znaleźć");
-        String tempLastName=geting.nextLine();
-        for(int i=1; i<=administration.size(); i++){
-            if(tempLastName.equals(administration.get(i-1).lastName)){
-                System.out.println("Oto "+i+" znaleziony pracownik");
-                System.out.println("Imie: "+administration.get(i-1).name);
-                System.out.println("Nazwisko: "+administration.get(i-1).lastName);
-                System.out.println("Wiek: "+administration.get(i-1).age);
-                System.out.println("PESEL: "+administration.get(i-1).pesel);
-                System.out.println("Wypłata: "+administration.get(i-1).salary);
-                System.out.println("Rozwiązane sprawy: "+administration.get(i-1).solvedCases);
-                System.out.println("Nr w tabeli: "+i);
-            }
-        }
     }
+    public PracownikAdministracyjny lookingForAdminByName(String tempName){
 
-    public void lookingForAdminBySalary(){
-
-
-            System.out.println("Podaj dolny zakres zarobków:");
-            int bottomSalary=geting.nextInt();
-            System.out.println("Podaj górny zakres zarobków: ");
-            int topSalary=geting.nextInt();
-            for(int i=1; i<=administration.size(); i++){
-                if(bottomSalary<administration.get(i-1).salary && administration.get(i-1).salary<topSalary){
-                    System.out.println("Oto "+i+" znaleziony pracownik");
-                    System.out.println("Imie: "+administration.get(i-1).name);
-                    System.out.println("Nazwisko: "+administration.get(i-1).lastName);
-                    System.out.println("Wiek: "+administration.get(i-1).age);
-                    System.out.println("PESEL: "+administration.get(i-1).pesel);
-                    System.out.println("Wypłata: "+administration.get(i-1).salary);
-                    System.out.println("Rozwiązane sprawy: "+administration.get(i-1).solvedCases);
-                    System.out.println("Nr w tabeli: "+i);
+        try {
+            for (int i = 0; i < administration.size(); i++) {
+                if (administration.get(i).name.equals(tempName)) {
+                    return administration.get(i);
                 }
             }
+        } catch (NullPointerException e) {
+            System.out.println("Nie znaleziono nikogo o takim imieniu. :C");
+        }
+
+        return null;
+
     }
 
-    public void lookingForAdminBySolvedCases() {
 
 
-        System.out.println("Podaj dolny zakres zarobków:");
-        int bottomCases = geting.nextInt();
-        System.out.println("Podaj górny zakres zarobków: ");
-        int topCases = geting.nextInt();
-        for (int i = 1; i <= administration.size(); i++) {
-            if (bottomCases < administration.get(i - 1).solvedCases && administration.get(i - 1).solvedCases < topCases) {
-                System.out.println("Oto " + i + " znaleziony pracownik");
-                System.out.println("Imie: " + administration.get(i - 1).name);
-                System.out.println("Nazwisko: " + administration.get(i - 1).lastName);
-                System.out.println("Wiek: " + administration.get(i - 1).age);
-                System.out.println("PESEL: " + administration.get(i - 1).pesel);
-                System.out.println("Wypłata: " + administration.get(i - 1).salary);
-                System.out.println("Rozwiązane sprawy: " + administration.get(i - 1).solvedCases);
-                System.out.println("Nr w tabeli: " + i);
+    public int positionInArrayOfAdmin(String nameOfAdmin){
+        for(int i=0; i<administration.size(); i++){
+            if(nameOfAdmin.equals(administration.get(i).name)){
+                return i;
             }
         }
+
+        return 9999;
     }
 
+
+
+
+    public PracownikAdministracyjny lookingForAdminByLastName(String tempLastName){
+
+
+        for(int i=0; i<administration.size(); i++){
+            if(tempLastName.equals(administration.get(i).lastName)){
+                return administration.get(i);
+            }
+        }
+        return null;
+    }
+
+    public PracownikAdministracyjny lookingForAdminBySalary(int tempSalary){
+        for (int i=0;i<administration.size();i++){
+            if (tempSalary==administration.get(i).salary){
+                return administration.get(i);
+            }
+        }
+    return null;
+    }
+
+    public PracownikAdministracyjny lookingForAdminBySolvedCases(int tempSolvedCases) {
+        for (int i=0;i<administration.size();i++){
+            if (tempSolvedCases==administration.get(i).solvedCases){
+                return administration.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void presentAdmin(String name){
+        for (int i=0;i<administration.size();i++){
+            if (administration.get(i).name.equals(name)){
+                System.out.println("Imie: "+administration.get(i).name);
+                System.out.println("Nazwisko: "+administration.get(i).lastName);
+                System.out.println("Wiek: "+administration.get(i).age);
+                System.out.println("Wypłata: "+administration.get(i).salary);
+                System.out.println("Rozwiązane sprawy: "+administration.get(i).solvedCases);
+            }
+        }
+
+    }
 
 
 
     public void addingTeacher(){
 
-        //Updating List
-        try {
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream("Teachers.ser");
-            ObjectInputStream in = new ObjectInputStream(file);
-
-            // Method for deserialization of object
-            teachers = (ArrayList<PracownikDydaktyczny>) in.readObject();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
         //Adding a new one to list
-        String a=geting.nextLine();
-        String b=geting.nextLine();
-        String c=geting.nextLine();
-        int d=geting.nextInt();
-        int e=geting.nextInt();
-        int f=geting.nextInt();
-        int g=geting.nextInt();
+        String name=geting.nextLine();
+        String lastName=geting.nextLine();
+        int age=geting.nextInt();
+        int pesel=geting.nextInt();
+        int salary=geting.nextInt();
+        int sciPublication=geting.nextInt();
+        String degree=geting.nextLine();
 
-        teachers.add(new PracownikDydaktyczny(a,b,c,d,e,f,g));
+        teachers.add(new PracownikDydaktyczny(name, lastName,age,pesel,salary,sciPublication,degree));
 
         //Serializing
         try
         {
 
-            FileOutputStream file = new FileOutputStream("Teachers.ser");
+            FileOutputStream file = new FileOutputStream("Teachers.txt");
             ObjectOutputStream out = new ObjectOutputStream(file);
 
             out.writeObject(teachers);
@@ -259,136 +206,98 @@ public class Uczelnia {
         {
             System.out.println(ex.getCause());
             System.out.println(ex.getMessage());
-
         }
-            //deserialize
-        try
-        {
-
-            FileInputStream file = new FileInputStream("Teachers.ser");
-            ObjectInputStream in = new ObjectInputStream(file);
-
-          
-            teachers = (ArrayList<PracownikDydaktyczny>)in.readObject();
-            in.close();
-            file.close();
-
-            System.out.println("Object has been deserialized ");
-            System.out.println(teachers.size());
-
-
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
-    public void lookingForTeacherByName(){
-
-            System.out.println("Podaj imie które chcesz znaleźć");
-            String tempName=geting.nextLine();
-            for(int i=1; i<=teachers.size(); i++){
-                if(tempName.equals(teachers.get(i-1).name)){
-                    System.out.println("Oto "+i+" znaleziony pracownik");
-                    System.out.println("Imie: "+teachers.get(i-1).name);
-                    System.out.println("Nazwisko: "+teachers.get(i-1).lastName);
-                    System.out.println("Stopień naukowy: "+ teachers.get(i-1).degree);
-                    System.out.println("Wiek: "+teachers.get(i-1).age);
-                    System.out.println("PESEL: "+teachers.get(i-1).pesel);
-                    System.out.println("Wypłata: "+teachers.get(i-1).salary);
-                    System.out.println("Ilość publikacji: "+teachers.get(i-1).sciPublication);
-                    System.out.println("Nr w tabeli: "+i);
-                }
+    public PracownikDydaktyczny lookingForTeacherByName(String tempName){
+        for (int i=0;i<teachers.size();i++){
+            if (tempName.equals(teachers.get(i).name)){
+                return teachers.get(i);
             }
         }
+        return null;
+    }
 
 
-    public void lookingForTeacherByLastName(){
-
-        System.out.println("Podaj nazwisko które chcesz znaleźć");
-        String tempName=geting.nextLine();
-        for(int i=1; i<=teachers.size(); i++){
-            if(tempName.equals(teachers.get(i-1).lastName)){
-                System.out.println("Oto "+i+" znaleziony pracownik");
-                System.out.println("Imie: "+teachers.get(i-1).name);
-                System.out.println("Nazwisko: "+teachers.get(i-1).lastName);
-                System.out.println("Stopień naukowy: "+ teachers.get(i-1).degree);
-                System.out.println("Wiek: "+teachers.get(i-1).age);
-                System.out.println("PESEL: "+teachers.get(i-1).pesel);
-                System.out.println("Wypłata: "+teachers.get(i-1).salary);
-                System.out.println("Ilość publikacji: "+teachers.get(i-1).sciPublication);
-                System.out.println("Nr w tabeli: "+i);
+    public PracownikDydaktyczny lookingForTeacherByLastName(String tempLastName){
+        for (int i=0;i<teachers.size();i++){
+            if (tempLastName.equals(teachers.get(i).lastName)){
+                return teachers.get(i);
             }
         }
+        return null;
     }
 
 
 
-    public void lookingForTeacherBySalary(){
-
-        System.out.println("Podaj dolny zakres zarobków:");
-        int bottomSalary=geting.nextInt();
-        System.out.println("Podaj górny zakres zarobków: ");
-        int topSalary=geting.nextInt();
-            for(int i=1; i<=teachers.size(); i++){
-                if(bottomSalary<teachers.get(i-1).salary && teachers.get(i-1).salary<topSalary){
-                    System.out.println("Oto "+i+" znaleziony pracownik");
-                    System.out.println("Imie: "+teachers.get(i-1).name);
-                    System.out.println("Nazwisko: "+teachers.get(i-1).lastName);
-                    System.out.println("Stopień naukowy: "+ teachers.get(i-1).degree);
-                    System.out.println("Wiek: "+teachers.get(i-1).age);
-                    System.out.println("PESEL: "+teachers.get(i-1).pesel);
-                    System.out.println("Wypłata: "+teachers.get(i-1).salary);
-                    System.out.println("Ilość publikacji: "+teachers.get(i-1).sciPublication);
-                    System.out.println("Nr w tabeli: "+i);
-                }
+    public PracownikDydaktyczny lookingForTeacherBySalary(int tempSalary){
+        for (int i=0;i<teachers.size();i++){
+            if (tempSalary==teachers.get(i).salary){
+                return teachers.get(i);
             }
+        }
+        return null;
+    }
+
+    public PracownikDydaktyczny lookingForTeacherByDegree(String tempDegree){
+        for (int i=0;i<teachers.size();i++){
+            if (tempDegree.equals(teachers.get(i).degree)){
+                return teachers.get(i);
+            }
+        }
+        return null;
+
 
     }
 
-    public void lookingForTeacherByDegree(){
+    public PracownikDydaktyczny lookingForTeacherBySciPublication(int sciPub){
+        for(int i=0;i<teachers.size();i++){
+            if (teachers.get(i).sciPublication==sciPub){
+                return teachers.get(i);
+            }
+        }
 
-        System.out.println("Podaj stopień naukowy który chcesz znaleźć:");
-        String tempName=geting.nextLine();
-        for(int i=1; i<=teachers.size(); i++){
-            if(tempName.equals(teachers.get(i-1).degree)){
-                System.out.println("Oto "+i+" znaleziony pracownik");
-                System.out.println("Imie: "+teachers.get(i-1).name);
-                System.out.println("Nazwisko: "+teachers.get(i-1).lastName);
-                System.out.println("Stopień naukowy: "+ teachers.get(i-1).degree);
-                System.out.println("Wiek: "+teachers.get(i-1).age);
-                System.out.println("PESEL: "+teachers.get(i-1).pesel);
-                System.out.println("Wypłata: "+teachers.get(i-1).salary);
-                System.out.println("Ilość publikacji: "+teachers.get(i-1).sciPublication);
-                System.out.println("Nr w tabeli: "+i);
+        return null;
+    }
+    public void presentTeacher(String name){
+        for (int i=0;i<teachers.size();i++){
+            if (teachers.get(i).name.equals(name)){
+                System.out.println("Imie: "+teachers.get(i).name);
+                System.out.println("Nazwisko: "+teachers.get(i).lastName);
+                System.out.println("Wiek: "+teachers.get(i).age);
+                System.out.println("Wypłata: "+teachers.get(i).salary);
+                System.out.println("Ilość publikacji: "+teachers.get(i).sciPublication);
+                System.out.println("Stopien naukowy: "+teachers.get(i).degree);
             }
         }
 
     }
 
-    public void lookingForTeacherBySciPublication(){
-
-        System.out.println("Podaj dolny zakres publikacji:");
-        int bottomSciPub=geting.nextInt();
-        System.out.println("Podaj górny zakres publikacji: ");
-        int topSciPub=geting.nextInt();
-        for(int i=1; i<=teachers.size(); i++){
-            if(bottomSciPub<teachers.get(i-1).salary && teachers.get(i-1).salary<topSciPub){
-                System.out.println("Oto "+i+" znaleziony pracownik");
-                System.out.println("Imie: "+teachers.get(i-1).name);
-                System.out.println("Nazwisko: "+teachers.get(i-1).lastName);
-                System.out.println("Stopień naukowy: "+ teachers.get(i-1).degree);
-                System.out.println("Wiek: "+teachers.get(i-1).age);
-                System.out.println("PESEL: "+teachers.get(i-1).pesel);
-                System.out.println("Wypłata: "+teachers.get(i-1).salary);
-                System.out.println("Ilość publikacji: "+teachers.get(i-1).sciPublication);
-                System.out.println("Nr w tabeli: "+i);
-            }
+    public void removingTeacher (int index){
+        System.out.println("Czy chodzi o pana "+teachers.get(index).name+" "+teachers.get(index).lastName+" ?");
+        System.out.println("Wybierz: 1/0");
+        int chooseRemove=geting.nextInt();
+        if(chooseRemove == 1){
+            teachers.remove(index);
+        } else if(chooseRemove == 0){
+            System.out.println("Nie usunieto tego pracownika. Tym razem.");
         }
+        else {
+            System.out.println("Wybrano złą cyfre. Wybierz 1 lub 0");
+        }
+    }
+
+
+    public int salaryOfEveryOne(){
+        int salaryForTeachers=0;
+        for (int i=0;i<teachers.size();i++){
+            salaryForTeachers= salaryForTeachers+teachers.get(i).salary;
+        }
+        int salaryForAdmins=0;
+        for (int i=0;i<administration.size();i++){
+            salaryForAdmins=salaryForAdmins+administration.get(i).salary;
+        }
+        return salaryForAdmins+salaryForTeachers;
     }
 
 

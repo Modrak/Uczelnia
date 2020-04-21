@@ -2,13 +2,11 @@ public class PracownikDydaktyczny extends PracownikUczelni implements java.io.Se
     int sciPublication;
     String degree;
 
-    public PracownikDydaktyczny(String a, String b, String c, int d, int e, int f, int g) {
-        name=a;
-        lastName=b;
-        degree=c;
-        age=d;
-        pesel=e;
-        sciPublication=f;
-        salary=g;
+    public PracownikDydaktyczny(String name, String lastName, int age, int pesel, int salary, int sciPublication, String degree)
+    {
+        super(name,lastName,age,pesel,salary);
+        this.sciPublication=sciPublication;
+        this.degree=degree;
     }
+
 }
